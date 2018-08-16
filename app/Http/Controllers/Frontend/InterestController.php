@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Investment;
 use App\Interest;
+use App\Models\Auth\User;
+use Auth;
 
 class InterestController extends Controller
 {
@@ -43,15 +45,17 @@ class InterestController extends Controller
         if ($values){
             foreach ($values as $value) {
                 $data = new Interest;
-                $data->investment_id = $value->id;
+                $data->user_id = Auth::user()->id;
+                $data->investment_id = $value->investment_id;
                 $data->interest_id = str_replace(".","",microtime(true)).rand(000,999);
-                $data->amount = '74';
-                $data->save();
+                $data->amount = '73.97';
+                $data->save();                
+                User::where('id', $value->user_id)->increment('wallet','73.97');
                 // $client = new Client();
                 // $request = $client->get('https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=yiNERTjxK8H75DITq2Auyrc2ML6faWtcLeGTxVxpkEDo2EtaUFyXaid4wjdA &from=Infinity&to='.Auth::user()->phone.'&body=Your account has been credited with 100,000');
-                // $response = $request->getBody()->getContents();
-                return back()->withFlashSuccess(__('Your transaction is successful'));
+                // $response = $request->getBody()->getContents();               
             } 
+            return back()->withFlashSuccess(__('Your transaction is successful'));
         }else{
             return back()->withFlashSuccess(__('No data'));
         }
