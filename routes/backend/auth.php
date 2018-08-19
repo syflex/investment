@@ -66,5 +66,14 @@ Route::group([
         Route::group(['namespace' => 'Role'], function () {
             Route::resource('role', 'RoleController', ['except' => ['show']]);
         });
+
+         /*
+         * Investment Management
+         */
+        Route::group(['namespace' => 'Investment'], function () {
+            Route::resource('investment', 'InvestmentController');
+        });
+
+        
     });
 });

@@ -16,7 +16,7 @@
             @if ($logged_in_user->isAdmin())
                 <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">
                     <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/auth*')) }}" href="#">
-                        <i class="icon-user"></i> {{ __('menus.backend.access.title') }}
+                        <i class="icon-user"></i> {{ __('Management') }}
 
                         @if ($pending_approval > 0)
                             <span class="badge badge-danger">{{ $pending_approval }}</span>
@@ -31,6 +31,11 @@
                                 @if ($pending_approval > 0)
                                     <span class="badge badge-danger">{{ $pending_approval }}</span>
                                 @endif
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/auth/investment*')) }}" href="{{ route('admin.auth.investment.index') }}">
+                                {{ __('Investment Management') }}
                             </a>
                         </li>
                         <li class="nav-item">

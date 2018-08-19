@@ -11,7 +11,7 @@ Route::post('contact/send', 'ContactController@send')->name('contact.send');
 
 
 Route::resource('investment', 'InvestmentController');
-Route::resource('interest', 'InterestController');
+Route::resource('compute/interest', 'InterestController');
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

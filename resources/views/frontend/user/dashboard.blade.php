@@ -39,9 +39,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
+
+
                 
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
@@ -68,44 +67,36 @@
                                     <div class="card-body">
                                 <!-- <h4 class="card-title">Investments</h4> -->
                                 <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
+                                <table class="tablesaw table-striped table-hover table-bordered table tablesaw-columntoggle" data-tablesaw-mode="columntoggle" id="table-437">
+                                    <thead>
+                                        <tr>                                             
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">Investement ID</th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">Amount</th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">Starts</th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="parsist">Ends</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @forelse($investments as  $index => $investment)
                                             <tr>
-                                                <th>S/N</th>
-                                                <th>Investment ID</th>
-                                                <th>Amount</th>
-                                                <th>Progress</th>
-                                                <th>Starts</th>
-                                                <th>Ends</th>
-                                                <th class="text-nowrap">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>                                           
-                                            @forelse($investments as  $index => $investment)
-                                            <tr>
-                                                <td>{{$index + 1}}</td>
+                                                
                                                 <td>{{$investment['investment_id']}}</td>
-                                                <td>
+                                                <td class="title">
                                                   {{number_format($investment['amount'], 2, '.', ',')}}
-                                                </td>
-                                                <td>
-                                                    <div class="progress progress-xs margin-vertical-10 ">
-                                                        <div class="progress-bar bg-inverse" style="width: 5%; height:6px;"></div>
-                                                    </div>
-                                                </td>
+                                                </td>                                               
                                                 <td>
                                                 {{ Carbon\Carbon::parse($investment['start_date'])->format('d-m-Y') }}
                                                 </td>
                                                 <td>
                                                 {{ Carbon\Carbon::parse($investment['end_date'])->format('d-m-Y') }}
                                                 </td>
-                                                <td><span class="label label-info">Running</span> </td>
+                                                
                                             </tr>
                                             @empty
-                                                <h1>No Data</h1>
-                                            @endforelse
-                                        </tbody>
-                                    </table>                              
+                                                <h3>No Data</h3>
+                                            @endforelse                                        
+                                    </tbody>
+                                </table>                              
                             
                             </div>
                                     </div>
@@ -114,20 +105,18 @@
                                 <div class="tab-pane" id="profile" role="tabpanel" aria-expanded="false">
                                 <div class="card-body">
                                 <!-- <h4 class="card-title">Investments</h4> -->
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
+                                <div class="table-responsive">                                   
+                                    <table class="tablesaw table-striped table-hover table-bordered table tablesaw-columntoggle" data-tablesaw-mode="columntoggle" id="table-437">
+                                    <thead>
+                                        <tr>                                             
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">Investement ID</th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">Amount</th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist">Date</th>                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @forelse($interests as $index => $interest)
                                             <tr>
-                                                <th>S/N</th>
-                                                <th>Investment ID</th>
-                                                <th>Amount</th>
-                                                <th>Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>                                           
-                                            @forelse($interests as $index => $interest)
-                                            <tr>
-                                                <td>{{$index + 1}}</td>
                                                 <td>{{$interest['investment_id']}}</td>
                                                 <td>
                                                     ₦ {{number_format($interest['amount'], 2, '.', ',')}}
@@ -138,9 +127,9 @@
                                             </tr>
                                             @empty
                                                 <h1>No Data</h1>
-                                            @endforelse
-                                        </tbody>
-                                    </table>    
+                                            @endforelse                               
+                                    </tbody>
+                                </table>  
                                     </div>                           
                             </div>
                                 </div>
@@ -150,44 +139,45 @@
                     </div>
 
 
-            <div class="col-lg-4 col-md-5">
+            
+            
+                <div class="col-lg-4 col-md-5">
                         
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title text-muted">Investment progress indicator</h4>
-                            <ul class="country-state">
-                            @foreach($investments as  $index => $investment)
-                                <li>
-                                    <h2>{{$investment['investment_id']}}</h2>
-                                    <!-- <small>From India</small> -->
-                                    <div class="pull-right">18% <i class="fa fa-level-up text-success"></i></div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 18%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </li> 
-                            @endforeach                             
-                            </ul>
+                            <h4 class="card-title text-muted">Investment Chart</h4>
+                            <div id="poll_div"></div>
+                                <?= $lava->render('BarChart','Investments','poll_div') ?>
                             <br>
                             <div class="card">
-                            <div class="d-flex flex-row">
-                                <div class="p-10 bg-info">
-                                    <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-info">₦ {{number_format($logged_in_user->wallet, 2, '.', ',')}}</h3>
-                                    <h5 class="text-muted m-b-0">WITDRAWABLES</h5></div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-               
+                                <div class="d-flex flex-row">
+                                    <div class="p-10 bg-info">
+                                        <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3>
+                                    </div>
+                                    <div class="align-self-center m-l-20">
+                                        <h3 class="m-b-0 text-info">₦ {{number_format($logged_in_user->wallet, 2, '.', ',')}}</h3>
+                                        <h5 class="text-muted m-b-0">WITDRAWABLES</h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
+
+
+
+               
 
 
 <!-- Modal -->
